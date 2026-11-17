@@ -1,5 +1,6 @@
 @startuml classdiagram
-title Testregister
+left to right direction
+title Testregister - Klassdiagram
 
 skinparam classAttributeIconSize 0
 

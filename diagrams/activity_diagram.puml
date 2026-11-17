@@ -1,5 +1,6 @@
 @startuml activity_diagram
-title Aktivitetsdiagram - testregister
+
+title Testregister - Aktivitetsdiagram
 
 start
 
