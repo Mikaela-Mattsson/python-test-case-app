@@ -1,0 +1,47 @@
+@startuml sequencediagram
+title Testfallsregister
+
+autonumber
+
+actor "User" as User
+boundary "TestCaseDialogs" as Dialogs
+control "TestCaseService" as Service
+participant "TestCaseRepository" as Repository
+
+User -> Dialogs : Väljer "Skapa nytt testfall"
+activate Dialogs
+
+Dialogs -> User : Begär titel, ID, steg och resultat
+User --> Dialogs : Skriver in uppgifter
+
+alt Lägg till Testfall
+    Dialogs -> Service : try_add_test_case(TestCase)
+    activate Service
+    Service -> Service : validera(TestCase)
+    
+    alt Testfallet är giltigt
+        Service -> Repository : try_add(TestCase)
+        Repository --> Service : Bekräftelse
+        Service --> Dialogs : Bekräftelse
+        Dialogs --> User : Visar bekräftelse
+    
+    else Testfallet är ogiltigt
+        Service --> Dialogs : Valideringsfel
+        Dialogs --> User : Visar felmeddelande  
+    end
+    deactivate Service
+
+
+Dialogs --> User : Alternativ "Återgång till menyn" eller "Avsluta"
+User-> Dialogs : Väljer alternativ
+
+alt Gå tillbaka till menyn
+    Dialogs --> User : Visar menyn
+
+else Avsluta
+    Dialogs --> User : Avslutar programmet
+
+end
+deactivate Dialogs
+end
+@enduml

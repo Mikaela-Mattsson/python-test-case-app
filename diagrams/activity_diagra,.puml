@@ -1,0 +1,44 @@
+@startuml activity_diagram
+title Aktivitetsdiagram - testregister
+
+start
+
+repeat
+  :Visa hälsning och meny;
+  :Användaren gör ett val;
+
+  switch (Val?)
+  case (Lägg till)
+    :Ange titel, ID, testdata;
+    repeat
+      :Lägg till teststeg:\ninstruktion och förväntat resultat;
+    repeat while (Fler teststeg?) is (Ja)
+    ->Nej;
+    : Ange resultat;
+    :Skapa Testcase och anropa\nTestCaseService.try_add_test_case();
+    :Spara i TestCaseRepository;
+
+  case (Ta bort)
+    :Välj testfall att radera;
+    :Anropa delete_test_case();
+
+  case (Uppdatera)
+    :Välj testfall och ange nya uppgifter;
+    :Anropa update_test_case();
+
+  case (Visa)
+    :Anropa get_all_test_cases();
+    :Visa sparade testfall;
+
+  case (Avsluta)
+    :Avsluta programmet;
+    stop
+
+case (Ogiltigt val)
+  :Visa felmeddelande;
+  endswitch
+
+repeat while (Fortsätt köra programmet?) is (Ja)
+
+stop
+@enduml
